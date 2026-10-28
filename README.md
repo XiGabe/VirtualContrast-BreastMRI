@@ -41,7 +41,7 @@ Fusion averages classifier logits. Results are mean ± SD across three classifie
 
 ## Data preparation
 
-Obtain [DUKE](https://www.cancerimagingarchive.net/collection/duke-breast-cancer-mri/), [MAMAMIA](https://github.com/LidiaGarrucho/MAMAMIA), and [ODELIA](https://arxiv.org/abs/2506.00474) from their respective sources. The fixed cohort and patient-level splits are in `reproducibility/cohort.csv`; source identifiers are in `reproducibility/source_mapping.csv`.
+Obtain [DUKE](https://www.cancerimagingarchive.net/collection/duke-breast-cancer-mri/), [MAMAMIA](https://www.synapse.org/Synapse:syn60868042), and [ODELIA](https://huggingface.co/datasets/ODELIA-AI/ODELIA-Challenge-2025) from their official dataset pages. The fixed cohort and patient-level splits are in `reproducibility/cohort.csv`; source identifiers are in `reproducibility/source_mapping.csv`.
 
 | Split | Patients | Breasts |
 |---|---:|---:|
@@ -68,13 +68,13 @@ python -m virtualcontrast.preprocess --sources data/sources.csv \
 
 Alternatively, provide `sources.csv` directly with columns `patient,nc,ce,divider`; paths are relative to the CSV. Use patient IDs from `cohort.csv`.
 
-[BreastDivider](https://huggingface.co/Bubenpo/BreastDivider) provides the anatomical masks. To generate them, install `nnunetv2==2.7.0` separately and obtain the model folder. Existing masks can be supplied through the `divider` column, allowing `--divider-model` to be omitted. The model checksum is in `reproducibility/preprocessing_reference.json`.
+[BreastDivider](https://huggingface.co/ykirchhoff/BreastDividerModel) provides the anatomical masks. To generate them, install `nnunetv2==2.7.0` separately and obtain the model folder. Existing masks can be supplied through the `divider` column, allowing `--divider-model` to be omitted. The model checksum is in `reproducibility/preprocessing_reference.json`.
 
 Paired volumes share NC-derived cropping and normalization, are resampled to 0.8×0.8×2 mm, and are padded to `[S,280,336]`. The cache contains `nc`, `ce`, and `breast` arrays with geometry metadata.
 
 ## Inference
 
-The weight bundle contains one generator and NC/CE/VCE classifiers for seeds 2026, 2027 and 2028. Download and verify the versioned weights once the release assets are available:
+The weight bundle contains one generator and NC/CE/VCE classifiers for seeds 2026, 2027 and 2028. Download and verify the versioned weights:
 
 ```bash
 python scripts/download_weights.py --tag v1.0.0
