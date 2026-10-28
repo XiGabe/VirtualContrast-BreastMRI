@@ -11,6 +11,8 @@ Virtual contrast-enhanced breast MRI generation, cancer detection using NC/CE/VC
 Tested with Python 3.10 and PyTorch 2.7.1. Install PyTorch for your CUDA version, then:
 
 ```bash
+git clone https://github.com/XiGabe/VirtualContrast-BreastMRI.git
+cd VirtualContrast-BreastMRI
 pip install -e '.[test]'
 pytest -q
 ```
@@ -47,7 +49,7 @@ Obtain [DUKE](https://www.cancerimagingarchive.net/collection/duke-breast-cancer
 | Validation | 197 | 375 |
 | Test | 245 | 473 |
 
-Preprocessing takes paired, native bilateral NIfTI volumes: fat-suppressed NC and the first acquired CE phase. Export these volumes from DICOM/parquet using the source dataset's conversion procedure. `source_mapping.csv` includes the original ODELIA patient identifiers and parquet shard names.
+Preprocessing expects paired, spatially aligned bilateral NIfTI volumes: fat-suppressed NC and the first acquired CE phase. Conversion from source DICOM/parquet files is not included. `source_mapping.csv` includes the original ODELIA patient identifiers and parquet shard names.
 
 Arrange the converted files as:
 
@@ -92,25 +94,31 @@ The generator predicts the enhancement residual and reconstructs VCE with 50%-ov
 
 Settings are in `configs/default.json`. The generator uses a five-stage 3D U-Net, 64×256×256 patches, and 10 epochs of AdamW optimization with cosine learning-rate decay from 1e-4 to 1e-5. Classifiers use DINOv2 ViT-S/14 with a slice transformer, train for up to 60 epochs, and select the checkpoint with the highest validation AUROC.
 
-Use separate cache and output directories for a new training run:
+Prepare a separate cache at `data/training_cache` using the preprocessing command above with `--output data/training_cache`, then train:
 
 ```bash
-python -m virtualcontrast.train_generator --cache data/cache --output outputs/generator
-mkdir -p weights
-cp outputs/generator/generator.pt weights/generator.pt
-python -m virtualcontrast.inference generate --cache data/cache --split all
+python -m virtualcontrast.train_generator --cache data/training_cache --output outputs/generator
+mkdir -p outputs/trained_weights
+cp outputs/generator/generator.pt outputs/trained_weights/generator.pt
+python -m virtualcontrast.inference generate --cache data/training_cache --split all \
+  --weights outputs/trained_weights
 
 for seed in 2026 2027 2028; do
   for modality in nc ce vce; do
-    python -m virtualcontrast.train_classifier --cache data/cache \
+    python -m virtualcontrast.train_classifier --cache data/training_cache \
       --modality "$modality" --seed "$seed" \
       --output "outputs/${modality}_${seed}"
-    cp "outputs/${modality}_${seed}/best.pt" "weights/${modality}_${seed}.pt"
+    cp "outputs/${modality}_${seed}/best.pt" "outputs/trained_weights/${modality}_${seed}.pt"
   done
 done
+
+python -m virtualcontrast.inference predict --cache data/training_cache --split test \
+  --weights outputs/trained_weights --output outputs/trained_predictions
+python -m virtualcontrast.evaluate --predictions outputs/trained_predictions --output outputs/trained_results
+python -m virtualcontrast.routing --predictions outputs/trained_predictions --output outputs/trained_results
 ```
 
-Then run inference and evaluation using the commands above. Add `--resume` to resume training from the last completed epoch. For offline classifier initialization, supply `--dinov2-weights /path/to/dinov2_vits14_pretrain.pth`.
+Add `--resume` to resume training from the last completed epoch. For offline classifier initialization, supply `--dinov2-weights /path/to/dinov2_vits14_pretrain.pth`.
 
 ## Image examples
 
