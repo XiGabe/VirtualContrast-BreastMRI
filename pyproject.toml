@@ -16,6 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest==9.0.3"]
+preprocessing = ["nnunetv2==2.7.0", "torchvision==0.22.1", "huggingface-hub>=0.34,<3"]
 
 [tool.setuptools.packages.find]
 include = ["virtualcontrast*"]

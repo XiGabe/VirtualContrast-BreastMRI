@@ -33,10 +33,14 @@ def load_predictions(directory):
 
 def evaluate(directory, output):
     frames = load_predictions(directory)
+    sources = sorted(frames[0].dataset.unique())
+    for source in sources:
+        if set(frames[0].loc[frames[0].dataset == source, 'label']) != {0, 1}:
+            raise ValueError(f'AUROC requires both labels in dataset {source}')
     records, repeats = [], []
     for name, columns in STRATEGIES.items():
         row = dict(strategy=name)
-        for source in ['overall', *sorted(frames[0].dataset.unique())]:
+        for source in ['overall', *sources]:
             values = []
             for seed, frame in zip(SEEDS, frames):
                 d = frame if source == 'overall' else frame[frame.dataset == source]
@@ -52,10 +56,10 @@ def evaluate(directory, output):
     output = Path(output)
     write_csv(output / 'table1.csv', records)
     write_csv(output / 'per_repeat.csv', repeats)
-    lines = ['| Strategy | AUROC | AUPRC | DUKE AUROC | MAMAMIA AUROC | ODELIA AUROC |',
-             '|---|---|---|---|---|---|']
+    headers = ['Strategy', 'AUROC', 'AUPRC', *[f'{source} AUROC' for source in sources]]
+    lines = ['| ' + ' | '.join(headers) + ' |', '|' + '---|' * len(headers)]
     for r in records:
-        keys = ['overall_auroc', 'overall_auprc', 'DUKE_auroc', 'MAMAMIA_auroc', 'ODELIA_auroc']
+        keys = ['overall_auroc', 'overall_auprc', *[f'{source}_auroc' for source in sources]]
         values = [f'{r[k+"_mean"]:.3f} ± {r[k+"_sd"]:.3f}' for k in keys]
         lines.append('| ' + ' | '.join([r['strategy'], *values]) + ' |')
     (output / 'table1.md').write_text('\n'.join(lines) + '\n')

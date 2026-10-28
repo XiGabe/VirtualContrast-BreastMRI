@@ -8,14 +8,20 @@ Virtual contrast-enhanced breast MRI generation, cancer detection using NC/CE/VC
 
 ## Installation
 
-Tested with Python 3.10 and PyTorch 2.7.1. Install PyTorch for your CUDA version, then:
+Tested with Python 3.10 and PyTorch 2.7.1. Create an environment and install the package (Linux, CUDA 11.8 example):
 
 ```bash
 git clone https://github.com/XiGabe/VirtualContrast-BreastMRI.git
 cd VirtualContrast-BreastMRI
+python3.10 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu118
 pip install -e '.[test]'
 pytest -q
 ```
+
+For another supported CUDA build or CPU, use the corresponding PyTorch wheel index for both `torch` and `torchvision`.
 
 ## Reproduce the reported results
 
@@ -58,17 +64,27 @@ data/nifti/{DUKE,MAMAMIA,ODELIA}/{source_patient_id}/{source_patient_id}_0.nii.g
 data/nifti/{DUKE,MAMAMIA,ODELIA}/{source_patient_id}/{source_patient_id}_1.nii.gz
 ```
 
+To generate anatomical masks with [BreastDivider](https://huggingface.co/ykirchhoff/BreastDividerModel), install the preprocessing dependencies and download its model:
+
+```bash
+pip install -e '.[preprocessing]'
+hf download ykirchhoff/BreastDividerModel fold_all/checkpoint_final.pth plans.json dataset.json \
+  --local-dir data/BreastDividerModel
+```
+
 Generate the input index and preprocess:
 
 ```bash
 python scripts/make_sources.py --root data/nifti --output data/sources.csv
 python -m virtualcontrast.preprocess --sources data/sources.csv \
-  --output data/cache --divider-model /path/to/BreastDividerModel
+  --output data/cache --divider-model data/BreastDividerModel
 ```
 
 Alternatively, provide `sources.csv` directly with columns `patient,nc,ce,divider`; paths are relative to the CSV. Use patient IDs from `cohort.csv`.
 
-[BreastDivider](https://huggingface.co/ykirchhoff/BreastDividerModel) provides the anatomical masks. To generate them, install `nnunetv2==2.7.0` separately and obtain the model folder. Existing masks can be supplied through the `divider` column, allowing `--divider-model` to be omitted. The model checksum is in `reproducibility/preprocessing_reference.json`.
+Existing masks can be supplied through the `divider` column, allowing the preprocessing dependency installation, model download and `--divider-model` option to be omitted. The model checksum is in `reproducibility/preprocessing_reference.json`.
+
+For a small trial, use a subset of `source_mapping.csv` with `make_sources.py --mapping`, and pass the matching subset of `cohort.csv` via `--manifest` to preprocessing, generation and prediction. Metric evaluation requires both labels in each included dataset.
 
 Paired volumes share NC-derived cropping and normalization, are resampled to 0.8×0.8×2 mm, and are padded to `[S,280,336]`. The cache contains `nc`, `ce`, and `breast` arrays with geometry metadata.
 

@@ -20,6 +20,29 @@ def test_reference_table(tmp_path):
     pd.testing.assert_frame_equal(actual,expected,check_exact=False,rtol=0,atol=1e-12)
 
 
+def test_single_dataset_evaluation(tmp_path):
+    predictions = tmp_path/'predictions'
+    predictions.mkdir()
+    for seed in [2026, 2027, 2028]:
+        frame = pd.read_csv(ROOT/f'reproducibility/predictions/seed_{seed}.csv')
+        frame[frame.dataset == 'DUKE'].to_csv(predictions/f'seed_{seed}.csv', index=False)
+    result = evaluate(predictions, tmp_path/'results')
+    expected = pd.read_csv(ROOT/'reproducibility/expected_table1.csv')
+    for actual, reference in zip(result, expected.to_dict('records')):
+        assert actual['overall_auroc_mean'] == pytest.approx(reference['DUKE_auroc_mean'])
+    header = (tmp_path/'results/table1.md').read_text().splitlines()[0]
+    assert header == '| Strategy | AUROC | AUPRC | DUKE AUROC |'
+
+
+def test_single_class_dataset_rejected(tmp_path):
+    for seed in [2026, 2027, 2028]:
+        frame = pd.read_csv(ROOT/f'reproducibility/predictions/seed_{seed}.csv')
+        frame = frame[(frame.dataset != 'DUKE') | (frame.label == 1)]
+        frame.to_csv(tmp_path/f'seed_{seed}.csv', index=False)
+    with pytest.raises(ValueError, match='both labels in dataset DUKE'):
+        evaluate(tmp_path, tmp_path/'results')
+
+
 def test_tie_aware_metrics():
     y = np.array([1,0,1,0,0,1])
     scores = np.array([[0,0,0,0,0,0],[.5,.5,.8,.8,.1,.1],[1,2,3,4,5,6]])
