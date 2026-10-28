@@ -1,0 +1,47 @@
+{
+  "generator": {
+    "seed": 2026,
+    "epochs": 10,
+    "patch": [
+      64,
+      256,
+      256
+    ],
+    "batch_size": 8,
+    "effective_batch": 16,
+    "lr": 0.0001,
+    "min_lr": 1e-05,
+    "weight_decay": 0.0001,
+    "overlap": 0.5,
+    "inference_batch": 8
+  },
+  "classifier": {
+    "seeds": [
+      2026,
+      2027,
+      2028
+    ],
+    "epochs": 60,
+    "batch_size": 32,
+    "effective_batch": 32,
+    "chunk_size": 160,
+    "encoder_lr": 1e-06,
+    "head_lr": 5e-05,
+    "weight_decay": 0.01,
+    "dropout": 0.1,
+    "patience": 6,
+    "min_delta": 0.002,
+    "lr_patience": 2,
+    "lr_factor": 0.5,
+    "min_lr_ratio": 0.1
+  },
+  "routing": {
+    "seed": 2026,
+    "permutations": 2000
+  },
+  "cohort": {
+    "train": 1888,
+    "val": 375,
+    "test": 473
+  }
+}

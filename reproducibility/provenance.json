@@ -1,0 +1,17 @@
+{
+  "2026": {
+    "source_sha256": "939f1d3cd91b3359b61520c2af5e4d33f606ef6a9c8a0deede0c83e9b43c433b",
+    "source": "synthetic_classifier/paired_logits",
+    "generator_seed": 2026
+  },
+  "2027": {
+    "source_sha256": "373d1cc7964ec21fb6ff1c4e489986f347225758acb2bfdc1986069aea97d7ba",
+    "source": "synthetic_classifier/paired_logits",
+    "generator_seed": 2026
+  },
+  "2028": {
+    "source_sha256": "93c247d9afb9d461410ae08ce841a12df92439c854cadd8fe3b34967df6c76d9",
+    "source": "synthetic_classifier/paired_logits",
+    "generator_seed": 2026
+  }
+}

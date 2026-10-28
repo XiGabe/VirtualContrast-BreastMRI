@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "virtualcontrast-breastmri"
+version = "1.0.0"
+description = "Minimal reproducible implementation of virtual contrast breast MRI detection and routing"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+  "torch==2.7.1", "numpy==2.2.6", "scipy==1.15.3", "pandas==2.3.3",
+  "scikit-learn==1.7.2", "nibabel==5.3.3", "matplotlib==3.10.8"
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.0.3"]
+
+[tool.setuptools.packages.find]
+include = ["virtualcontrast*"]
+
+[tool.setuptools.package-data]
+"virtualcontrast._dinov2" = ["LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

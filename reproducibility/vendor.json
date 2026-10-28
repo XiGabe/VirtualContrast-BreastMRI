@@ -1,0 +1,12 @@
+{
+  "virtualcontrast/_dinov2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "virtualcontrast/_dinov2/vision_transformer.py": "6473c7a4b9664a1ba6af7d4203ad3e64c7d4a9ab2988cfdae08f93ef2d913cd3",
+  "virtualcontrast/_dinov2/layers/layer_scale.py": "abb7bbfae152a9de2e6d0961ab5e75c79428e849281bfe50dd07b66b54b485d1",
+  "virtualcontrast/_dinov2/layers/swiglu_ffn.py": "816539ba3958644009cb45fc00f033881574843beedaa41028ca191fcedea271",
+  "virtualcontrast/_dinov2/layers/__init__.py": "35278ba68918733f9d90dcc53498171a0fecef4ba0ae6afdabf47a3f19a54aea",
+  "virtualcontrast/_dinov2/layers/mlp.py": "255825c73b60a916dd00eb1e38aacbcdbf316e40d6a005efb46e245b7edb43aa",
+  "virtualcontrast/_dinov2/layers/drop_path.py": "b9f8236e86054b9d9a71275efcad2a9ecaa1f86b529d4b8d6109ddb5e806f67a",
+  "virtualcontrast/_dinov2/layers/attention.py": "975a249cde9f53d89961228724412600afd027746bd9ea61f5497d0fd25e0733",
+  "virtualcontrast/_dinov2/layers/patch_embed.py": "40da6add3d811198ea3e17cb99cdd4e5cda59e369efbbe3d18d89308618cf142",
+  "virtualcontrast/_dinov2/layers/block.py": "898bc32ff39145b18e5c5866fcf370425e76d0cd132d01b2837f22c2f9fab89d"
+}

@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "sample_id": "B1648",
+      "slice": 38,
+      "crop_yx": [
+        [
+          27,
+          42
+        ],
+        [
+          255,
+          302
+        ]
+      ],
+      "tumor_contour": true
+    },
+    {
+      "sample_id": "B1119",
+      "slice": 46,
+      "crop_yx": [
+        [
+          32,
+          81
+        ],
+        [
+          235,
+          281
+        ]
+      ],
+      "tumor_contour": true
+    },
+    {
+      "sample_id": "B2530",
+      "slice": 43,
+      "crop_yx": [
+        [
+          18,
+          63
+        ],
+        [
+          258,
+          279
+        ]
+      ],
+      "tumor_contour": false
+    },
+    {
+      "sample_id": "B1926",
+      "slice": 33,
+      "crop_yx": [
+        [
+          52,
+          81
+        ],
+        [
+          247,
+          260
+        ]
+      ],
+      "tumor_contour": false
+    }
+  ]
+}

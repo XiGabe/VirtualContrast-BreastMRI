@@ -1,0 +1,7 @@
+{
+  "breastdivider": {
+    "BreastDividerModel/fold_all/checkpoint_final.pth": "18441fe5536ce9209d216f8a9ba6e6331c69f54a0acb3fa2fca6428214b92d18"
+  },
+  "nnunetv2": "2.7.0",
+  "notes": "Original paired NIfTI conversion is required before cache preparation; native arrays were not re-registered."
+}

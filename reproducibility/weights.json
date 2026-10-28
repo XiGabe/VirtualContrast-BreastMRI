@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "artifacts": [
+    {
+      "file": "generator.pt",
+      "sha256": "242d2f8fa7608b9375f0598ea35d6154d243473c3f773ca87e82173704f02029",
+      "source_sha256": "5b9b33841fd31f56b1d1a1aeeaa4d4ed6218e93c9b800d855e9e8a46782f4e01",
+      "bytes": 66181213
+    },
+    {
+      "file": "nc_2026.pt",
+      "sha256": "069a396663fbbb05728d10b408991a4cfdd100fa0bf20458a41db53563451005",
+      "source_sha256": "17f9b8de8835bf268c87b00525695e9519cec0739a6cc3c02215802caea77581",
+      "bytes": 91856507,
+      "epoch": 17
+    },
+    {
+      "file": "ce_2026.pt",
+      "sha256": "0da0e6f3151a4af0ebfb18479823d2ff65449a3de4dfa9b752b238c6e02fcf6f",
+      "source_sha256": "a8dac0ef50fa73c53bbf179a546f6cef88436c5bc79400a521cc2f914c24ad57",
+      "bytes": 91856507,
+      "epoch": 7
+    },
+    {
+      "file": "vce_2026.pt",
+      "sha256": "98750af52a401c0ab4a8f6ab8ce44b664e28467c27b805b4c3522f52bbf46943",
+      "source_sha256": "95755590743fb07a9c65ab410808769da9ebea9f63dd84a675e77fa75931a0c5",
+      "bytes": 91857155,
+      "epoch": 19
+    },
+    {
+      "file": "nc_2027.pt",
+      "sha256": "1f1d945e9c3f1b359b32a903f215e64399524b6a1329c0ed5f21905b568ac5a1",
+      "source_sha256": "41d5ea4b838a5d22b351c678472dfe854c1da11f137f403576ac6a4298c03f21",
+      "bytes": 91856507,
+      "epoch": 14
+    },
+    {
+      "file": "ce_2027.pt",
+      "sha256": "541321674754c8593e3df2e821886bb6f393f650cc52b337f54abd51dc0269f8",
+      "source_sha256": "48f325aaad96b45b4ef6c7773e5c62e0ffe01bb89e13af9639c397f08c3fa83b",
+      "bytes": 91856507,
+      "epoch": 8
+    },
+    {
+      "file": "vce_2027.pt",
+      "sha256": "40090b5f3c041bb893c7a952bf377253d249a7f1001f89163e7571ce770501c9",
+      "source_sha256": "b457511de2eb76bc7b29782e6d5d958a2cd32cc46deabad00190bdb199e1d059",
+      "bytes": 91857155,
+      "epoch": 23
+    },
+    {
+      "file": "nc_2028.pt",
+      "sha256": "27634aaf7fdad3fc602ffa967e75ac1d2e25d9817f029fae41ee16a28fdfc63c",
+      "source_sha256": "edb5cb374777dc45a377bd4fd8cbcaa5cae53c8f50321aa62589c35bc200e1b9",
+      "bytes": 91856507,
+      "epoch": 12
+    },
+    {
+      "file": "ce_2028.pt",
+      "sha256": "f48ded3c2651664877f1219cd0eb6bc285585784fbdf6c2100d5f0421df31524",
+      "source_sha256": "94ef8842d8cc99623a5b262b92a4ef6144ce46aab143b6793700a0aa940becb9",
+      "bytes": 91856507,
+      "epoch": 10
+    },
+    {
+      "file": "vce_2028.pt",
+      "sha256": "c597448362b1690591b40feb1f1df48502b30a0c8ea36035c25def9f76bd41c1",
+      "source_sha256": "0c60139a100168addb858e2b32809220decc7972d5ce6559158f35c610f27e74",
+      "bytes": 91857155,
+      "epoch": 21
+    }
+  ]
+}
